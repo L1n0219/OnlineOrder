@@ -87,6 +87,12 @@
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
+        <!-- Sa-Token 权限认证，在线文档：https://sa-token.com -->
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-spring-boot4-starter</artifactId>
+            <version>1.46.0</version>
+        </dependency>
     </dependencies>
 
     <build>
