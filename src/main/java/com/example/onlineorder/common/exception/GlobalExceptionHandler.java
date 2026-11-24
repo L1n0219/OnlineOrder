@@ -1,5 +1,7 @@
 package com.example.onlineorder.common.exception;
 
+import cn.dev33.satoken.exception.NotLoginException;
+import cn.dev33.satoken.exception.NotRoleException;
 import com.example.onlineorder.common.Result;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -117,5 +119,19 @@ public class GlobalExceptionHandler {
     public Result<Void> handleException(Exception e, HttpServletRequest request) {
         log.error("系统异常，请求地址：{}", request.getRequestURI(), e);
         return Result.fail(Result.CODE_ERROR, "系统繁忙，请稍后重试");
+    }
+
+    // 未登录
+    @ExceptionHandler(NotLoginException.class)
+    public Result<Void> handleNotLogin(NotLoginException e) {
+        log.warn("未登录：{}", e.getMessage());
+        return Result.fail(401, "未登录，请先登录");
+    }
+
+    // 无角色权限
+    @ExceptionHandler(NotRoleException.class)
+    public Result<Void> handleNotRole(NotRoleException e) {
+        log.warn("无权限：{}", e.getMessage());
+        return Result.fail(403, "无权限访问");
     }
 }
