@@ -1,0 +1,22 @@
+server:
+  servlet:
+    context-path: /dev-api
+  port: 8080
+
+# DataSource Config
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/onlineorder_db?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=utf8
+    username: root
+    password: Lilinbeibei2007
+
+# Sa-Token Config
+sa-token:
+  token-name: satoken        # token 名称（前端 header 里就叫这个）
+  timeout: 2592000           # 有效期 30 天（单位秒）
+  is-read-cookie: false      # 前后端分离：不从 Cookie 读 token
+  is-read-header: true       # 从请求头读 token
+  is-write-header: true      # 登录时也把 token 写进响应头（可选）
+  token-style: uuid          # token 风格（可选）
+  is-log: false              # 是否打印鉴权日志（开发期可开 true）

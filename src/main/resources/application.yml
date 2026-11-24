@@ -1,0 +1,4 @@
+#这里是指定运行环境的配置项
+spring:
+  profiles:
+    active: dev

@@ -24,7 +24,9 @@ public class MybatisPlusConfig {
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
         // 指定数据库类型为 MySQL，分页插件会根据它生成对应的 LIMIT 分页语句
-        interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
+        PaginationInnerInterceptor pagination = new PaginationInnerInterceptor(DbType.MYSQL);
+        pagination.setMaxLimit(100L);   // 任何接口单页最多 100 条，作为全局兜底
+        interceptor.addInnerInterceptor(pagination);
         return interceptor;
     }
 }
