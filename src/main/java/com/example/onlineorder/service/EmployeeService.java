@@ -3,6 +3,9 @@ package com.example.onlineorder.service;
 import com.example.onlineorder.pojo.DTO.admin.RegisterDTO;
 import com.example.onlineorder.pojo.DTO.auth.LoginDTO;
 import com.example.onlineorder.pojo.VO.auth.LoginVO;
+import com.example.onlineorder.pojo.entity.PickupWindow;
+
+import java.util.List;
 
 /**
  * 员工 Service 接口。
@@ -23,4 +26,12 @@ public interface EmployeeService {
      * @param dto 新增员工的请求体
      */
     void register(RegisterDTO dto);
+
+    /**
+     * 查询某员工负责的所有取餐窗口。
+     *
+     * @param empId 员工编号
+     * @return 该员工负责的窗口列表（一名员工可能负责多个窗口，故返回 List）
+     */
+    List<PickupWindow> getPickupWindow(Long empId);
 }

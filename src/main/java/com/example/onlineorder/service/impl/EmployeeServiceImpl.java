@@ -4,14 +4,18 @@ import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.example.onlineorder.common.exception.BusinessException;
 import com.example.onlineorder.mapper.EmployeeMapper;
+import com.example.onlineorder.mapper.PickupWindowMapper;
 import com.example.onlineorder.pojo.DTO.admin.RegisterDTO;
 import com.example.onlineorder.pojo.DTO.auth.LoginDTO;
 import com.example.onlineorder.pojo.VO.auth.LoginVO;
 import com.example.onlineorder.pojo.entity.Employee;
+import com.example.onlineorder.pojo.entity.PickupWindow;
 import com.example.onlineorder.service.EmployeeService;
 import jakarta.annotation.Resource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 员工 Service 实现。
@@ -21,6 +25,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Resource
     private EmployeeMapper employeeMapper;
+
+    @Resource
+    private PickupWindowMapper pickupWindowMapper;
 
     /** BCrypt 加密器：既用于登录比对，也用于新增员工时把明文密码加密成哈希 */
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -82,5 +89,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         // 3. 入库
         employeeMapper.insert(emp);
+    }
+
+    /**
+     * 查询某员工负责的所有取餐窗口。
+     * <p>
+     * pickup_window 表的 employee_id 未加唯一索引，一名员工可能负责多个窗口，
+     * 所以这里用 selectList 按 employee_id 查出全部窗口。
+     */
+    @Override
+    public List<PickupWindow> getPickupWindow(Long empId) {
+        return pickupWindowMapper.selectList(new LambdaQueryWrapper<PickupWindow>()
+                .eq(PickupWindow::getEmployeeId, empId));
     }
 }
