@@ -29,7 +29,7 @@ public class AuthController {
      * 请求体：{ "username": "...", "password": "..." }。
      * 成功后返回 token，前端把它放进后续请求的 Sa-token 请求头里。
      */
-    @PostMapping("/login")
+    @PostMapping("/employee/login")
     public Result<LoginVO> login(@Valid @RequestBody LoginDTO dto) {
         return Result.ok("登录成功", employeeService.login(dto));
     }
