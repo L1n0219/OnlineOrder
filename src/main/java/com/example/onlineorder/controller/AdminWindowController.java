@@ -52,4 +52,23 @@ public class AdminWindowController {
         windowService.addWindow(dto);
         return Result.ok("添加新窗口成功", null);
     }
+
+    /**
+     * 修改窗口的负责员工。
+     */
+    @PutMapping("/{windowId}")
+    public Result<Void> editWindow(@PathVariable("windowId") long windowId,
+                                   @RequestParam Long empId) {
+        windowService.modifyWindow(windowId, empId);
+        return Result.ok("修改窗口成功", null);
+    }
+
+    /**
+     * 删除取餐窗口。
+     */
+    @DeleteMapping("/{windowId}")
+    public Result<Void> deleteWindow(@PathVariable("windowId") long windowId) {
+        windowService.deleteWindow(windowId);
+        return Result.ok("删除窗口成功", null);
+    }
 }

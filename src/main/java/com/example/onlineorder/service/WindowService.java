@@ -33,4 +33,19 @@ public interface WindowService {
      * @param dto 新增窗口请求体（负责员工编号）
      */
     void addWindow(NewWindowDTO dto);
+
+    /**
+     * 修改窗口的负责员工。
+     *
+     * @param windowId 窗口编号
+     * @param empId    新的负责员工编号
+     */
+    void modifyWindow(Long windowId, Long empId);
+
+    /**
+     * 删除取餐窗口。
+     *
+     * @param windowId 窗口编号
+     */
+    void deleteWindow(Long windowId);
 }
