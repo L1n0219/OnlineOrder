@@ -2,6 +2,7 @@ package com.example.onlineorder.common.constant;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
 import com.example.onlineorder.common.exception.BusinessException;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
  * 菜品状态枚举。
@@ -15,6 +16,7 @@ public enum DishStatusEnum {
 
     /** 存到数据库的值（对应 TINYINT） */
     @EnumValue
+    @JsonValue
     private final int code;
 
     /** 状态描述 */
