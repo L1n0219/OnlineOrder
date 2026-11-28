@@ -24,11 +24,19 @@ public enum OrderStatusEnum {
         this.description = description;
     }
 
+    public int getCode() {
+        return code;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
     /** 根据 code 反查枚举，找不到抛出 BusinessException */
     public static OrderStatusEnum of(int code) {
         for (OrderStatusEnum e : values()) {
             if (e.code == code) return e;
         }
-        throw new BusinessException("未知的菜品状态：" + code);
+        throw new BusinessException("未知的订单状态：" + code);
     }
 }

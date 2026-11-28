@@ -1,5 +1,6 @@
 package com.example.onlineorder.pojo.DTO.admin;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
@@ -18,19 +19,24 @@ import java.time.LocalDate;
 public class UpdateEmployeeDTO {
 
     /** 姓名（不传则不改） */
+    @Schema(example = "刘洋")
     @Size(max = 50, message = "姓名长度不能超过 50 个字符")
     private String name;
 
     /** 角色：1 员工，2 管理员（不传则不改；系统只允许存在一个管理员账号） */
+    @Schema(example = "1")
     private Integer role;
 
     /** 性别：0 未知，1 男，2 女（不传则不改） */
+    @Schema(example = "1")
     private Integer gender;
 
     /** 出生日期（不传则不改） */
+    @Schema(example = "1995-05-17")
     private LocalDate birthDate;
 
     /** 证件号（employee 表有唯一索引，不传则不改） */
+    @Schema(example = "110101199505170056")
     @Size(max = 18, message = "证件号长度不能超过 18 个字符")
     private String idCardNum;
 }
