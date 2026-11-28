@@ -1,0 +1,33 @@
+package com.example.onlineorder.pojo.DTO.admin;
+
+import jakarta.validation.constraints.Size;
+import lombok.Data;
+
+import java.time.LocalDate;
+
+/**
+ * 修改员工信息请求体（DTO）。
+ * <p>
+ * 只提交需要修改的字段即可，没传（null）的字段保持原值不变。
+ * 用户名创建后不可改；密码不在这里修改，请走「重置员工密码」接口。
+ */
+@Data
+public class UpdateEmployeeDTO {
+
+    /** 姓名（不传则不改） */
+    @Size(max = 50, message = "姓名长度不能超过 50 个字符")
+    private String name;
+
+    /** 角色：1 员工，2 管理员（不传则不改；系统只允许存在一个管理员账号） */
+    private Integer role;
+
+    /** 性别：0 未知，1 男，2 女（不传则不改） */
+    private Integer gender;
+
+    /** 出生日期（不传则不改） */
+    private LocalDate birthDate;
+
+    /** 证件号（employee 表有唯一索引，不传则不改） */
+    @Size(max = 18, message = "证件号长度不能超过 18 个字符")
+    private String idCardNum;
+}
