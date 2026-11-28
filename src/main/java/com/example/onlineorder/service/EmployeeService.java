@@ -1,6 +1,7 @@
 package com.example.onlineorder.service;
 
 import com.example.onlineorder.pojo.DTO.admin.RegisterDTO;
+import com.example.onlineorder.pojo.DTO.admin.UpdateEmployeeDTO;
 import com.example.onlineorder.pojo.DTO.auth.LoginDTO;
 import com.example.onlineorder.pojo.VO.auth.LoginVO;
 import com.example.onlineorder.pojo.entity.PickupWindow;
@@ -26,6 +27,22 @@ public interface EmployeeService {
      * @param dto 新增员工的请求体
      */
     void register(RegisterDTO dto);
+
+    /**
+     * 修改员工信息（只更新请求体里传了值的字段）。
+     *
+     * @param employeeId 员工编号
+     * @param dto        要修改的内容
+     */
+    void updateEmployee(Long employeeId, UpdateEmployeeDTO dto);
+
+    /**
+     * 重置员工密码（管理员操作）。
+     *
+     * @param employeeId  员工编号
+     * @param newPassword 新密码明文，后端 BCrypt 加密后入库
+     */
+    void resetPassword(Long employeeId, String newPassword);
 
     /**
      * 查询某员工负责的所有取餐窗口。
