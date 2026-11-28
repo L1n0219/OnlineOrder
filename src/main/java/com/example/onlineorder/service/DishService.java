@@ -2,6 +2,7 @@ package com.example.onlineorder.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.onlineorder.pojo.DTO.admin.DishDTO;
+import com.example.onlineorder.pojo.DTO.admin.UpdateDishDTO;
 import com.example.onlineorder.pojo.entity.Dish;
 
 /**
@@ -34,4 +35,19 @@ public interface DishService {
      * @param dto 新增菜品请求体
      */
     void addDish(DishDTO dto);
+
+    /**
+     * 修改菜品（字段为 null 表示不修改）。
+     *
+     * @param dishId 菜品编号
+     * @param dto    修改内容
+     */
+    void modifyDish(Long dishId, UpdateDishDTO dto);
+
+    /**
+     * 删除菜品。
+     *
+     * @param dishId 菜品编号
+     */
+    void deleteDish(Long dishId);
 }

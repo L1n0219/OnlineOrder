@@ -1,6 +1,7 @@
 package com.example.onlineorder.config;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -17,4 +18,10 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowCredentials(true)                // 6. 允许携带 cookie
                 .maxAge(3600);                         // 7. 预检请求缓存 1 小时
     }
+
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addConverterFactory(new StringToCodeEnumConverterFactory());
+    }
+
 }

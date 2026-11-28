@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.example.onlineorder.common.constant.OrderStatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -39,7 +40,7 @@ public class Order {
     private String tableNo;
 
     @TableField(value = "status")
-    private Integer status;
+    private OrderStatusEnum status = OrderStatusEnum.WAIT_FOR_COMMIT;
 
     @TableField(value = "created_at")
     private LocalDateTime createTime;

@@ -5,8 +5,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.onlineorder.common.constant.DishStatusEnum;
 import com.example.onlineorder.common.exception.BusinessException;
 import com.example.onlineorder.mapper.DishMapper;
+import com.example.onlineorder.mapper.OrderItemMapper;
 import com.example.onlineorder.pojo.DTO.admin.DishDTO;
+import com.example.onlineorder.pojo.DTO.admin.UpdateDishDTO;
 import com.example.onlineorder.pojo.entity.Dish;
+import com.example.onlineorder.pojo.entity.OrderItem;
 import com.example.onlineorder.service.DishService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -19,6 +22,9 @@ import org.springframework.util.StringUtils;
 public class DishServiceImpl implements DishService {
     @Resource
     private DishMapper dishMapper;
+
+    @Resource
+    private OrderItemMapper orderItemMapper;
 
     /**
      * 分页查询上架菜品，可按类别筛选，按 id 倒序。
@@ -87,5 +93,53 @@ public class DishServiceImpl implements DishService {
         dish.setStock(dto.getStock());
         dish.setStatus(dto.getStatus());
         dishMapper.insert(dish);
+    }
+
+    /**
+     * 修改菜品。
+     * <p>
+     * 字段为 null 表示不修改，配合 updateById 只更新非 null 字段实现部分更新。
+     */
+    @Override
+    public void modifyDish(Long dishId, UpdateDishDTO dto) {
+        if (dishId == null) {
+            throw new BusinessException("菜品编号不能为空");
+        }
+        Dish dish = dishMapper.selectById(dishId);
+        if (dish == null) {
+            throw new BusinessException("菜品不存在！");
+        }
+        dish.setName(dto.getName());
+        dish.setCategory(dto.getCategory());
+        dish.setPrice(dto.getPrice());
+        dish.setStock(dto.getStock());
+        dish.setStatus(dto.getStatus());
+        dishMapper.updateById(dish);
+    }
+
+    /**
+     * 删除菜品。
+     * <p>
+     * 上架的菜品不能删（需先下架），且被订单明细引用的菜品不能删（防外键约束）。
+     */
+    @Override
+    public void deleteDish(Long dishId) {
+        if (dishId == null) {
+            throw new BusinessException("菜品编号不能为空");
+        }
+        Dish dish = dishMapper.selectById(dishId);
+        if (dish == null) {
+            throw new BusinessException("菜品不存在！");
+        }
+        if (DishStatusEnum.ON_SALE.equals(dish.getStatus())) {
+            throw new BusinessException("菜品在上架状态，无法删除！");
+        }
+        // 外键约束：被订单明细引用的菜品不能删（即使已下架）
+        Long count = orderItemMapper.selectCount(
+                new LambdaQueryWrapper<OrderItem>().eq(OrderItem::getDishId, dishId));
+        if (count != null && count > 0) {
+            throw new BusinessException("该菜品已被订单使用，无法删除！");
+        }
+        dishMapper.deleteById(dishId);
     }
 }

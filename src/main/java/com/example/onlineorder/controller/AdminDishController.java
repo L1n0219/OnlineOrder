@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.onlineorder.common.PageResult;
 import com.example.onlineorder.common.Result;
 import com.example.onlineorder.pojo.DTO.admin.DishDTO;
+import com.example.onlineorder.pojo.DTO.admin.UpdateDishDTO;
 import com.example.onlineorder.pojo.entity.Dish;
 import com.example.onlineorder.service.DishService;
 import jakarta.annotation.Resource;
@@ -42,4 +43,23 @@ public class AdminDishController {
         dishService.addDish(dto);
         return Result.ok("添加成功！", null);
     }
+
+    /**
+     * 修改菜品（字段为 null 表示不修改）。
+     */
+    @PutMapping("/{dishId}")
+    public Result<Void> editDish(@PathVariable("dishId") Long dishId, @Valid @RequestBody UpdateDishDTO dto) {
+        dishService.modifyDish(dishId, dto);
+        return Result.ok("修改成功！", null);
+    }
+
+    /**
+     * 删除菜品。
+     */
+    @DeleteMapping("/{dishId}")
+    public Result<Void> deleteDish(@PathVariable("dishId") Long dishId) {
+        dishService.deleteDish(dishId);
+        return Result.ok("删除成功！", null);
+    }
+
 }
