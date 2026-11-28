@@ -145,6 +145,10 @@ public class EmployeeServiceImpl implements EmployeeService {
                     throw new BusinessException("系统已存在管理员账号，不能把该员工提升为管理员");
                 }
             }
+            // 降级保护：系统必须始终保留一个管理员，禁止把（最后一个）管理员降为员工
+            if (role == 1 && Objects.equals(emp.getRole(), 2)) {
+                throw new BusinessException("系统必须保留至少一个管理员账号，不能把管理员降级为员工");
+            }
             emp.setRole(role);
         }
 

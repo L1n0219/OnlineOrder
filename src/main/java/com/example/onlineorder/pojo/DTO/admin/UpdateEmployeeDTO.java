@@ -10,6 +10,9 @@ import java.time.LocalDate;
  * <p>
  * 只提交需要修改的字段即可，没传（null）的字段保持原值不变。
  * 用户名创建后不可改；密码不在这里修改，请走「重置员工密码」接口。
+ * <p>
+ * 注意：本类是接口的请求体（DTO），不是数据库实体，不参与 MyBatis-Plus 的表字段映射，
+ * 因此不需要 @TableField；字段与列的对应关系定义在实体 Employee 上（idCardNum 已标注 @TableField("id_card")）。
  */
 @Data
 public class UpdateEmployeeDTO {
